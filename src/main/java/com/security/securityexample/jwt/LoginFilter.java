@@ -1,7 +1,10 @@
 package com.security.securityexample.jwt;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,9 +27,21 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         //spring security에서 username과 password를 검증하기위한 Token(DTO)
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                username, password);
+                username, password, null);
 
         //토근 검증을 위해 authenticationManager로 전달
         return authenticationManager.authenticate(authToken);
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request,
+            HttpServletResponse response, FilterChain chain, Authentication authResult)
+            throws IOException, ServletException {
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+            HttpServletResponse response, AuthenticationException failed)
+            throws IOException, ServletException {
     }
 }
