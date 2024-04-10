@@ -35,7 +35,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(auth -> auth
                         .ignoringRequestMatchers(PathRequest.toH2Console())
@@ -51,7 +51,7 @@ public class SecurityConfig {
 
                 //UsernamePasswordAuthenticationFilter를 대체해서 등록하기 위해 addFilterAt을 사용함
                 //만약 전 또는 후에 넣고 싶다면 addFilterAfter, addFilterBefore를 사용하자
-                .addFilterAt(new LoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class)
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
