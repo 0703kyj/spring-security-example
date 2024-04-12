@@ -22,3 +22,7 @@ spring:
     username: sa
     password:
 
+app:
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
+
